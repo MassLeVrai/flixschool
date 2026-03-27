@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accueil — FlixSchool</title>
+  <link rel="icon" type="image/png" href="FlixSchool_logo.png"/>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap');
+
+  :root {
+    --bg: #f0faf4;
+    --ink: #0a1f14;
+    --ink2: #3d6652;
+    --emerald: #059669;
+    --emerald-dark: #047857;
+    --emerald-light: #d1fae5;
+    --emerald-mid: #6ee7b7;
+    --border: #a7f3d0;
+    --card: #ffffff;
+    --discord: #5865f2;
+    --radius: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
+    height: 68px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    background: rgba(255,255,255,0.96);
+    border-bottom: 2px solid var(--emerald);
+    box-shadow: 0 2px 20px rgba(5,150,105,0.12);
+    backdrop-filter: blur(12px);
+  }
+  .nav-left { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-logo { width:38px; height:38px; border-radius:10px; object-fit:cover; border:2px solid var(--emerald-light); }
+  .nav-name { font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:800; color:var(--emerald-dark); letter-spacing:-0.01em; }
+  .nav-links { display:flex; gap:4px; list-style:none; align-items:center; }
+  .nav-links li a {
+    font-size:0.875rem; font-weight:600; color:var(--ink);
+    text-decoration:none; padding:8px 14px; border-radius:50px;
+    transition:all .2s; display:flex; align-items:center; gap:5px;
+  }
+  .nav-links li a:hover { color:var(--emerald-dark); background:var(--emerald-light); }
+  .nav-links li a.active { color:var(--emerald-dark); background:var(--emerald-light); font-weight:700; }
+  .nav-pronote {
+    color:var(--emerald-dark) !important;
+    border:1.5px solid var(--border) !important;
+    background:var(--emerald-light) !important;
+  }
+  .nav-pronote:hover { background:var(--emerald-mid) !important; }
+  .nav-cta {
+    background:var(--discord) !important; color:#fff !important;
+    padding:9px 20px !important; border-radius:50px; font-weight:700 !important;
+    box-shadow:0 2px 12px rgba(88,101,242,0.35); text-decoration:none;
+    font-size:0.875rem; display:flex; align-items:center; gap:6px;
+    transition:background .2s, transform .15s, box-shadow .2s;
+  }
+  .nav-cta:hover { background:#4752c4 !important; transform:translateY(-1px); box-shadow:0 4px 18px rgba(88,101,242,0.45) !important; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:50px;
+    font-size:0.95rem; font-weight:600; text-decoration:none;
+    transition:transform .2s, box-shadow .2s, background .2s; cursor:pointer; border:none;
+  }
+  .btn-emerald { background:var(--emerald); color:#fff; box-shadow:0 4px 16px rgba(5,150,105,0.35); }
+  .btn-emerald:hover { background:var(--emerald-dark); transform:translateY(-2px); box-shadow:0 8px 24px rgba(5,150,105,0.4); }
+  .btn-discord { background:var(--discord); color:#fff; box-shadow:0 4px 16px rgba(88,101,242,0.4); font-family:'DM Sans',sans-serif; }
+  .btn-discord:hover { background:#4752c4; transform:translateY(-2px); box-shadow:0 8px 24px rgba(88,101,242,0.45); }
+  .btn-ghost { background:transparent; color:var(--ink); border:2px solid var(--border); }
+  .btn-ghost:hover { border-color:var(--emerald); color:var(--emerald-dark); background:var(--emerald-light); transform:translateY(-1px); }
+  .btn-ghost-white { background:transparent; color:#fff; border:2px solid rgba(255,255,255,0.4); }
+  .btn-ghost-white:hover { border-color:#fff; background:rgba(255,255,255,0.12); transform:translateY(-1px); }
+  .btn-discord.shaking { animation: shake .6s ease; }
+
+  /* ── SECTION SHARED ── */
+  .section-label {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--emerald); margin-bottom:12px;
+  }
+  .section-title {
+    font-family:'Syne',sans-serif; font-size:clamp(1.9rem,3.5vw,2.8rem);
+    line-height:1.1; letter-spacing:-.02em; margin-bottom:14px; color:var(--ink);
+  }
+  .section-desc { font-size:1rem; color:var(--ink2); line-height:1.7; max-width:520px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background:var(--ink); color:white; padding:52px 40px 32px;
+  }
+  .footer-inner { max-width:1100px; margin:0 auto; }
+  .footer-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .footer-brand { display:flex; align-items:center; gap:12px; }
+  .footer-brand img { width:36px; height:36px; border-radius:10px; object-fit:cover; }
+  .footer-brand span { font-family:'Syne',sans-serif; font-size:1.1rem; color:white; font-weight:700; }
+  .footer-links { display:flex; gap:24px; flex-wrap:wrap; }
+  .footer-links a { color:rgba(255,255,255,0.45); font-size:0.85rem; text-decoration:none; transition:color .2s; }
+  .footer-links a:hover { color:var(--emerald-mid); }
+  .footer-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:20px; }
+  .footer-copy { font-size:0.78rem; color:rgba(255,255,255,0.3); }
+  .footer-fun { font-size:0.78rem; color:rgba(255,255,255,0.2); font-style:italic; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+  @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+  @keyframes wiggle { 0%,100%{transform:rotate(0);} 25%{transform:rotate(-5deg);} 75%{transform:rotate(5deg);} }
+  @keyframes gradientShift { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+  @keyframes ticker { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @keyframes shake {
+    0%{transform:translateX(0) rotate(0);} 10%{transform:translateX(-4px) rotate(-2deg);}
+    20%{transform:translateX(4px) rotate(2deg);} 30%{transform:translateX(-5px) rotate(-1deg);}
+    40%{transform:translateX(5px) rotate(1deg);} 50%{transform:translateX(-3px) rotate(-1.5deg);}
+    60%{transform:translateX(3px) rotate(1.5deg);} 70%{transform:translateX(-2px) rotate(-.5deg);}
+    80%{transform:translateX(2px) rotate(.5deg);} 100%{transform:translateX(0) rotate(0);}
+  }
+  @keyframes confettiFall {
+    0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0.3);}
+  }
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal-left.visible { opacity:1; transform:translateX(0); }
+  .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal-right.visible { opacity:1; transform:translateX(0); }
+  .reveal-scale { opacity:0; transform:scale(0.9); transition:opacity .6s ease, transform .6s ease; }
+  .reveal-scale.visible { opacity:1; transform:scale(1); }
+  .confetti-particle {
+    position:fixed; border-radius:2px; pointer-events:none; z-index:9999;
+    animation:confettiFall var(--dur,1.2s) ease-out forwards;
+  }
+
+  @media(max-width:900px) {
+    nav { padding:0 18px; }
+    .nav-links { display:none; }
+    footer { padding:40px 20px 24px; }
+  }
+
+  .hero {
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:100px 24px 80px; position:relative; overflow:hidden;
+    background:url('bg_school.png') center/cover no-repeat;
+  }
+  .hero-overlay {
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(to bottom, rgba(0,20,12,0.6) 0%, rgba(0,40,24,0.75) 60%, rgba(0,30,18,0.88) 100%);
+  }
+  .hero-content { position:relative; z-index:2; max-width:820px; margin:0 auto; }
+
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(6,255,150,0.1); backdrop-filter:blur(8px);
+    border:1px solid rgba(110,231,183,0.3); color:#6ee7b7;
+    font-size:0.78rem; font-weight:600; padding:7px 18px; border-radius:50px;
+    margin-bottom:32px; animation:fadeIn .8s ease both;
+  }
+  .hero-badge .dot { width:7px; height:7px; background:#34d399; border-radius:50%; animation:pulse 1.8s infinite; box-shadow:0 0 8px #34d399; }
+
+  .hero-logo {
+    width:110px; height:110px; border-radius:22px; margin:0 auto 32px; display:block;
+    object-fit:cover; border:3px solid rgba(110,231,183,0.3);
+    box-shadow:0 0 40px rgba(52,211,153,0.25), 0 20px 60px rgba(0,0,0,0.4);
+    animation:fadeIn .7s .1s ease both;
+  }
+
+  .hero h1 {
+    font-family:'Syne',sans-serif; font-size:clamp(3rem,8vw,5.8rem);
+    line-height:1.02; letter-spacing:-.04em; color:#fff;
+    margin:0 auto 20px; animation:fadeUp .7s .2s ease both;
+    text-shadow:0 4px 24px rgba(0,0,0,0.3);
+  }
+  .hero-gradient {
+    background:linear-gradient(90deg,#34d399,#6ee7b7,#a7f3d0);
+    background-size:200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    animation:gradientShift 3s linear infinite;
+  }
+  .hero-sub {
+    font-size:1.1rem; color:rgba(255,255,255,0.78); max-width:520px;
+    margin:0 auto 44px; line-height:1.75; animation:fadeUp .7s .3s ease both;
+  }
+  .hero-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; animation:fadeUp .7s .4s ease both; }
+  .hero-stats {
+    display:flex; gap:48px; justify-content:center; flex-wrap:wrap;
+    margin-top:64px; padding-top:36px; border-top:1px solid rgba(110,231,183,0.2);
+    animation:fadeUp .7s .55s ease both;
+  }
+  .stat { text-align:center; }
+  .stat-number { font-family:'Syne',sans-serif; font-size:2.4rem; color:#34d399; line-height:1; }
+  .stat-label { font-size:0.72rem; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:.08em; margin-top:5px; }
+
+  /* TICKER */
+  .ticker-wrap { background:var(--emerald); overflow:hidden; padding:11px 0; }
+  .ticker-inner { display:inline-block; animation:ticker 28s linear infinite; white-space:nowrap; }
+  .ticker-item { display:inline-block; padding:0 36px; font-size:0.83rem; font-weight:600; color:#fff; }
+
+  /* FEATURES */
+  .features-section { padding:100px 24px; max-width:1100px; margin:0 auto; }
+  .features-header { margin-bottom:52px; }
+  .features-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:20px; }
+  .feature-card {
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:30px 26px; transition:transform .25s,box-shadow .25s; position:relative; overflow:hidden;
+  }
+  .feature-card::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg,var(--emerald),var(--emerald-mid));
+    transform:scaleX(0); transform-origin:left; transition:transform .3s;
+  }
+  .feature-card:hover { transform:translateY(-6px); box-shadow:0 16px 48px rgba(5,150,105,0.12); }
+  .feature-card:hover::after { transform:scaleX(1); }
+  .feature-icon { font-size:2rem; margin-bottom:16px; display:block; animation:float 3s ease-in-out infinite; }
+  .feature-title { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; margin-bottom:8px; color:var(--ink); }
+  .feature-desc { font-size:0.87rem; color:var(--ink2); line-height:1.65; }
+  .feature-tag { display:inline-block; margin-top:12px; font-size:0.72rem; color:var(--emerald); font-style:italic; }
+
+  /* ABOUT */
+  .about-section { background:var(--ink); padding:100px 24px; position:relative; overflow:hidden; }
+  .about-bg { position:absolute; inset:0; background:url('bg_school.png') center/cover no-repeat; opacity:0.07; }
+  .about-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+  .about-text .section-label { color:var(--emerald-mid); }
+  .about-text .section-title { color:white; }
+  .about-text .section-desc { color:rgba(255,255,255,0.6); }
+  .about-list { list-style:none; margin-top:28px; display:flex; flex-direction:column; gap:16px; }
+  .about-list li { display:flex; align-items:flex-start; gap:12px; color:rgba(255,255,255,0.75); font-size:0.93rem; line-height:1.55; }
+  .about-list .ic { font-size:1.1rem; flex-shrink:0; margin-top:1px; }
+  .about-panel { background:rgba(255,255,255,0.04); border:1px solid rgba(110,231,183,0.15); border-radius:20px; padding:28px; }
+  .mockup-bar2 { background:#0a2e1c; border-radius:10px 10px 0 0; padding:12px 16px; display:flex; align-items:center; gap:8px; }
+  .mdot { width:10px; height:10px; border-radius:50%; }
+  .mockup-body2 { background:#0d3d24; border-radius:0 0 10px 10px; padding:16px; }
+  .mg { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .mg:last-child { border-bottom:none; }
+  .mgl { font-size:0.68rem; color:rgba(255,255,255,0.4); }
+  .mgv { font-size:0.72rem; font-weight:700; color:#34d399; }
+  .mention { margin-top:14px; background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.2); border-radius:8px; padding:10px 14px; text-align:center; font-size:0.72rem; color:#6ee7b7; font-weight:600; }
+
+  @media(max-width:900px){ .about-grid{grid-template-columns:1fr;} .hero-stats{gap:24px;} }
+</style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="nav-left">
+      <img src="FlixSchool_logo.png" alt="FlixSchool" class="nav-logo"/>
+      <span class="nav-name">FlixSchool</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">🏠 Accueil</a></li>
+      <li><a href="niveaux.html">📚 Niveaux</a></li>
+      <li><a href="equipe.html">👥 Équipe</a></li>
+      <li><a href="https://www.flixschools.fr" target="_blank" class="nav-pronote">📓 Pronote</a></li>
+      <li><a href="rejoindre.html" class="nav-cta">🎮 Rejoindre</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> 12 000 élèves connectés — Ton cours commence dans 3 min 😬</div>
+      <img src="FlixSchool_logo.png" alt="FlixSchool" class="hero-logo"/>
+      <h1>Bienvenue à<br><span class="hero-gradient">FlixSchool</span></h1>
+      <p class="hero-sub">Le lycée fictif où chaque élève écrit sa propre histoire. Rejoins 12 000 membres sur Discord depuis 2021 — pas d'interros surprise. Enfin, presque. 🎒</p>
+      <div class="hero-actions">
+        <a href="rejoindre.html" class="btn btn-discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.101.118 18.14.149 18.167a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg> Rejoindre le serveur</a>
+        <a href="niveaux.html" class="btn btn-ghost-white">Voir les classes →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-number">12k</div><div class="stat-label">Élèves inscrits</div></div>
+        <div class="stat"><div class="stat-number">7</div><div class="stat-label">Classes</div></div>
+        <div class="stat"><div class="stat-number">2021</div><div class="stat-label">Fondé en</div></div>
+        <div class="stat"><div class="stat-number">0</div><div class="stat-label">Interros surprise*</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker-inner">
+      <span class="ticker-item">📢 La cantine sert des frites fictives aujourd'hui</span>
+      <span class="ticker-item">🔔 Rappel : rendre sa fiche personnage avant la récré</span>
+      <span class="ticker-item">⚠️ Le prof de maths est en mode boss final</span>
+      <span class="ticker-item">🟢 FlixSchool — Serveur Pronote RP depuis 2021</span>
+      <span class="ticker-item">📚 12 000 élèves ne peuvent pas avoir tort</span>
+      <span class="ticker-item">🚀 La meilleure école fictive de Discord</span>
+      <span class="ticker-item">😅 Non, tu n'as pas de devoir pour demain. On te jure.</span>
+      <span class="ticker-item">📢 La cantine sert des frites fictives aujourd'hui</span>
+      <span class="ticker-item">🔔 Rappel : rendre sa fiche personnage avant la récré</span>
+      <span class="ticker-item">⚠️ Le prof de maths est en mode boss final</span>
+      <span class="ticker-item">🟢 FlixSchool — Serveur Pronote RP depuis 2021</span>
+      <span class="ticker-item">📚 12 000 élèves ne peuvent pas avoir tort</span>
+      <span class="ticker-item">🚀 La meilleure école fictive de Discord</span>
+      <span class="ticker-item">😅 Non, tu n'as pas de devoir pour demain. On te jure.</span>
+    </div>
+  </div>
+
+  <section class="features-section">
+    <div class="features-header reveal">
+      <div class="section-label">✨ Pourquoi nous rejoindre</div>
+      <h2 class="section-title">FlixSchool, c'est quoi ?</h2>
+      <p class="section-desc">Un serveur Discord où tu incarnes un élève (ou un prof) dans un lycée fictif. Spoiler : c'est beaucoup plus fun que la vraie vie scolaire. 😅</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <span class="feature-icon">📚</span>
+        <div class="feature-title">Scolarité complète</div>
+        <div class="feature-desc">De la 6ème à la Terminale — 7 niveaux, chacun avec ses propres canaux, ambiance et drama scolaire.</div>
+        <span class="feature-tag">* Le CPE fictif est très sérieux à ce sujet.</span>
+      </div>
+      <div class="feature-card reveal" style="animation-delay:.08s">
+        <span class="feature-icon">🎭</span>
+        <div class="feature-title">RP ultra immersif</div>
+        <div class="feature-desc">Cours, récré, cantine, sorties scolaires... chaque moment de ta vie scolaire fictive est roleplay-able.</div>
+        <span class="feature-tag">* Même l'oubli de carnet de correspondance.</span>
+      </div>
+      <div class="feature-card reveal" style="animation-delay:.16s">
+        <span class="feature-icon">🤝</span>
+        <div class="feature-title">Communauté au top</div>
+        <div class="feature-desc">12 000 membres bienveillants + un staff dévoué. On a testé, c'est vraiment sympa ici.</div>
+        <span class="feature-tag">* Opinion totalement objective du staff.</span>
+      </div>
+      <div class="feature-card reveal" style="animation-delay:.24s">
+        <span class="feature-icon">⭐</span>
+        <div class="feature-title">Progression réelle</div>
+        <div class="feature-desc">Monte de classe, obtiens des mentions honorables, deviens le meilleur élève de ta promo fictive.</div>
+        <span class="feature-tag">* Ça ne compte pas sur Parcoursup. Dommage.</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="about-section">
+    <div class="about-bg"></div>
+    <div class="about-inner">
+      <div class="about-grid">
+        <div class="about-text reveal-left">
+          <div class="section-label">🌿 Notre histoire</div>
+          <h2 class="section-title">Fondé en 2021,<br>toujours debout</h2>
+          <p class="section-desc">FlixSchool est né d'une idée simple : recréer l'univers de Pronote sur Discord. Depuis, on a survécu aux mises à jour Discord, aux bugs de bot et à l'été 2022. 💪</p>
+          <ul class="about-list">
+            <li><span class="ic">📅</span><span>Actif depuis 2021 sans interruption majeure (sauf les pannes Discord)</span></li>
+            <li><span class="ic">🏆</span><span>Plus de 12 000 membres qui ont survécu à au moins une interro RP</span></li>
+            <li><span class="ic">🛠️</span><span>Un staff bénévole qui mérite clairement une médaille</span></li>
+            <li><span class="ic">🔄</span><span>Évolution constante grâce aux retours des membres</span></li>
+          </ul>
+        </div>
+        <div class="about-panel reveal-right">
+          <div class="mockup-bar2">
+            <div class="mdot" style="background:#ff5f57"></div>
+            <div class="mdot" style="background:#ffbd2e"></div>
+            <div class="mdot" style="background:#28c840"></div>
+            <span style="font-size:.65rem;color:rgba(255,255,255,0.3);margin-left:8px;font-family:monospace">FlixSchool · Pronote RP</span>
+          </div>
+          <div class="mockup-body2">
+            <div class="mg"><span class="mgl">Mathématiques</span><span class="mgv">18/20 🎉</span></div>
+            <div class="mg"><span class="mgl">Français</span><span class="mgv">15/20 📝</span></div>
+            <div class="mg"><span class="mgl">Histoire-Géo</span><span class="mgv">17/20 🗺️</span></div>
+            <div class="mg"><span class="mgl">SVT</span><span class="mgv">16/20 🌿</span></div>
+            <div class="mg"><span class="mgl">EPS</span><span class="mgv">20/20 🏃</span></div>
+            <div class="mention">✅ Félicitations — Mention Très Bien</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="FlixSchool_logo.png" alt="FlixSchool"/>
+          <span>FlixSchool</span>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Accueil</a>
+          <a href="niveaux.html">Niveaux</a>
+          <a href="equipe.html">Équipe</a>
+          <a href="https://www.flixschools.fr" target="_blank">📓 Pronote</a>
+          <a href="rejoindre.html">Rejoindre</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 FlixSchool — Serveur Discord Pronote RP fictif</span>
+        <span class="footer-fun">⚠️ Aucun élève n'a séché les cours pour faire ce site... ou presque.</span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Reveal
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.1});
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el => obs.observe(el));
+
+  // Active nav
+  const cur = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links li a').forEach(a => {
+    if(a.getAttribute('href') === cur) a.classList.add('active');
+  });
+
+  // Nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow = window.scrollY > 10
+      ? '0 4px 28px rgba(5,150,105,0.18)' : '0 2px 20px rgba(5,150,105,0.12)';
+  });
+
+  // Confetti + shake
+  const CC = ['#059669','#6ee7b7','#fbbf24','#f472b6','#60a5fa','#fff','#34d399','#a7f3d0'];
+  function launchConfetti(btn) {
+    const r = btn.getBoundingClientRect(), cx = r.left+r.width/2, cy = r.top+r.height/2;
+    for(let i=0;i<55;i++){
+      const p = document.createElement('div');
+      p.className = 'confetti-particle';
+      const a=Math.random()*Math.PI*2, d=80+Math.random()*190;
+      p.style.cssText=[
+        'left:'+(cx-5)+'px','top:'+(cy-5)+'px',
+        'width:'+(6+Math.random()*9)+'px','height:'+(6+Math.random()*9)+'px',
+        '--tx:'+(Math.cos(a)*d)+'px','--ty:'+(Math.sin(a)*d-80)+'px',
+        '--rot:'+((Math.random()-.5)*720)+'deg',
+        '--dur:'+(0.8+Math.random()*.9)+'s',
+        'background:'+CC[Math.floor(Math.random()*CC.length)],
+        'border-radius:'+(Math.random()>.5?'50%':'3px'),
+      ].join(';');
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),2000);
+    }
+  }
+  document.querySelectorAll('.btn-discord').forEach(btn => {
+    btn.addEventListener('click',function(){
+      this.classList.remove('shaking'); void this.offsetWidth;
+      this.classList.add('shaking'); launchConfetti(this);
+      this.addEventListener('animationend',()=>this.classList.remove('shaking'),{once:true});
+    });
+  });
+</script>
+
+
+</body>
+</html>

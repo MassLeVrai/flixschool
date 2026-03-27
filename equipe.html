@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Équipe — FlixSchool</title>
+  <link rel="icon" type="image/png" href="FlixSchool_logo.png"/>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap');
+
+  :root {
+    --bg: #f0faf4;
+    --ink: #0a1f14;
+    --ink2: #3d6652;
+    --emerald: #059669;
+    --emerald-dark: #047857;
+    --emerald-light: #d1fae5;
+    --emerald-mid: #6ee7b7;
+    --border: #a7f3d0;
+    --card: #ffffff;
+    --discord: #5865f2;
+    --radius: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
+    height: 68px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    background: rgba(255,255,255,0.96);
+    border-bottom: 2px solid var(--emerald);
+    box-shadow: 0 2px 20px rgba(5,150,105,0.12);
+    backdrop-filter: blur(12px);
+  }
+  .nav-left { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-logo { width:38px; height:38px; border-radius:10px; object-fit:cover; border:2px solid var(--emerald-light); }
+  .nav-name { font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:800; color:var(--emerald-dark); letter-spacing:-0.01em; }
+  .nav-links { display:flex; gap:4px; list-style:none; align-items:center; }
+  .nav-links li a {
+    font-size:0.875rem; font-weight:600; color:var(--ink);
+    text-decoration:none; padding:8px 14px; border-radius:50px;
+    transition:all .2s; display:flex; align-items:center; gap:5px;
+  }
+  .nav-links li a:hover { color:var(--emerald-dark); background:var(--emerald-light); }
+  .nav-links li a.active { color:var(--emerald-dark); background:var(--emerald-light); font-weight:700; }
+  .nav-pronote {
+    color:var(--emerald-dark) !important;
+    border:1.5px solid var(--border) !important;
+    background:var(--emerald-light) !important;
+  }
+  .nav-pronote:hover { background:var(--emerald-mid) !important; }
+  .nav-cta {
+    background:var(--discord) !important; color:#fff !important;
+    padding:9px 20px !important; border-radius:50px; font-weight:700 !important;
+    box-shadow:0 2px 12px rgba(88,101,242,0.35); text-decoration:none;
+    font-size:0.875rem; display:flex; align-items:center; gap:6px;
+    transition:background .2s, transform .15s, box-shadow .2s;
+  }
+  .nav-cta:hover { background:#4752c4 !important; transform:translateY(-1px); box-shadow:0 4px 18px rgba(88,101,242,0.45) !important; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:50px;
+    font-size:0.95rem; font-weight:600; text-decoration:none;
+    transition:transform .2s, box-shadow .2s, background .2s; cursor:pointer; border:none;
+  }
+  .btn-emerald { background:var(--emerald); color:#fff; box-shadow:0 4px 16px rgba(5,150,105,0.35); }
+  .btn-emerald:hover { background:var(--emerald-dark); transform:translateY(-2px); box-shadow:0 8px 24px rgba(5,150,105,0.4); }
+  .btn-discord { background:var(--discord); color:#fff; box-shadow:0 4px 16px rgba(88,101,242,0.4); font-family:'DM Sans',sans-serif; }
+  .btn-discord:hover { background:#4752c4; transform:translateY(-2px); box-shadow:0 8px 24px rgba(88,101,242,0.45); }
+  .btn-ghost { background:transparent; color:var(--ink); border:2px solid var(--border); }
+  .btn-ghost:hover { border-color:var(--emerald); color:var(--emerald-dark); background:var(--emerald-light); transform:translateY(-1px); }
+  .btn-ghost-white { background:transparent; color:#fff; border:2px solid rgba(255,255,255,0.4); }
+  .btn-ghost-white:hover { border-color:#fff; background:rgba(255,255,255,0.12); transform:translateY(-1px); }
+  .btn-discord.shaking { animation: shake .6s ease; }
+
+  /* ── SECTION SHARED ── */
+  .section-label {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--emerald); margin-bottom:12px;
+  }
+  .section-title {
+    font-family:'Syne',sans-serif; font-size:clamp(1.9rem,3.5vw,2.8rem);
+    line-height:1.1; letter-spacing:-.02em; margin-bottom:14px; color:var(--ink);
+  }
+  .section-desc { font-size:1rem; color:var(--ink2); line-height:1.7; max-width:520px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background:var(--ink); color:white; padding:52px 40px 32px;
+  }
+  .footer-inner { max-width:1100px; margin:0 auto; }
+  .footer-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .footer-brand { display:flex; align-items:center; gap:12px; }
+  .footer-brand img { width:36px; height:36px; border-radius:10px; object-fit:cover; }
+  .footer-brand span { font-family:'Syne',sans-serif; font-size:1.1rem; color:white; font-weight:700; }
+  .footer-links { display:flex; gap:24px; flex-wrap:wrap; }
+  .footer-links a { color:rgba(255,255,255,0.45); font-size:0.85rem; text-decoration:none; transition:color .2s; }
+  .footer-links a:hover { color:var(--emerald-mid); }
+  .footer-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:20px; }
+  .footer-copy { font-size:0.78rem; color:rgba(255,255,255,0.3); }
+  .footer-fun { font-size:0.78rem; color:rgba(255,255,255,0.2); font-style:italic; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+  @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+  @keyframes wiggle { 0%,100%{transform:rotate(0);} 25%{transform:rotate(-5deg);} 75%{transform:rotate(5deg);} }
+  @keyframes gradientShift { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+  @keyframes ticker { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @keyframes shake {
+    0%{transform:translateX(0) rotate(0);} 10%{transform:translateX(-4px) rotate(-2deg);}
+    20%{transform:translateX(4px) rotate(2deg);} 30%{transform:translateX(-5px) rotate(-1deg);}
+    40%{transform:translateX(5px) rotate(1deg);} 50%{transform:translateX(-3px) rotate(-1.5deg);}
+    60%{transform:translateX(3px) rotate(1.5deg);} 70%{transform:translateX(-2px) rotate(-.5deg);}
+    80%{transform:translateX(2px) rotate(.5deg);} 100%{transform:translateX(0) rotate(0);}
+  }
+  @keyframes confettiFall {
+    0%{opacity:1;transform:translate(0,0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0.3);}
+  }
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal-left.visible { opacity:1; transform:translateX(0); }
+  .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal-right.visible { opacity:1; transform:translateX(0); }
+  .reveal-scale { opacity:0; transform:scale(0.9); transition:opacity .6s ease, transform .6s ease; }
+  .reveal-scale.visible { opacity:1; transform:scale(1); }
+  .confetti-particle {
+    position:fixed; border-radius:2px; pointer-events:none; z-index:9999;
+    animation:confettiFall var(--dur,1.2s) ease-out forwards;
+  }
+
+  @media(max-width:900px) {
+    nav { padding:0 18px; }
+    .nav-links { display:none; }
+    footer { padding:40px 20px 24px; }
+  }
+
+  .page-hero {
+    padding:130px 24px 72px; text-align:center; position:relative; overflow:hidden;
+    background:url('bg_school.png') center/cover no-repeat; min-height:55vh;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .page-hero-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(to bottom,rgba(0,20,12,0.65),rgba(0,40,24,0.82)); }
+  .page-hero-content { position:relative; z-index:2; }
+  .page-hero .section-label { color:var(--emerald-mid); }
+  .page-hero h1 { font-family:'Syne',sans-serif; font-size:clamp(2.4rem,5vw,4rem); color:#fff; letter-spacing:-.03em; line-height:1.08; margin-bottom:14px; animation:fadeUp .6s ease both; }
+  .page-hero p { font-size:1rem; color:rgba(255,255,255,0.72); max-width:520px; margin:0 auto; line-height:1.7; animation:fadeUp .6s .15s ease both; }
+
+  .team-section { padding:100px 24px; max-width:1100px; margin:0 auto; }
+  .team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:22px; margin-top:52px; }
+  .team-card {
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:36px 24px 28px; text-align:center; transition:transform .25s,box-shadow .25s; position:relative; overflow:hidden;
+  }
+  .team-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--emerald),var(--emerald-mid)); }
+  .team-card:hover { transform:translateY(-6px); box-shadow:0 20px 48px rgba(5,150,105,0.12); }
+  .team-card:hover .av-wrap { transform:scale(1.08) rotate(-3deg); }
+  .av-wrap { transition:transform .3s; display:inline-block; margin-bottom:18px; }
+  .team-avatar {
+    width:78px; height:78px; border-radius:50%; margin:0 auto;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.8rem; color:#fff; position:relative;
+  }
+  .team-avatar::after {
+    content:''; position:absolute; inset:-4px; border-radius:50%;
+    border:2px dashed rgba(52,211,153,0.35); animation:wiggle 4s ease-in-out infinite;
+  }
+  .team-name { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:6px; }
+  .team-badge {
+    display:inline-block; padding:4px 12px; border-radius:50px;
+    font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:12px;
+    background:var(--emerald-light); color:var(--emerald-dark);
+  }
+  .team-desc { font-size:0.85rem; color:var(--ink2); line-height:1.6; }
+  .team-fun { font-size:0.75rem; color:var(--emerald); font-style:italic; margin-top:8px; }
+
+  .quote-section { background:linear-gradient(135deg,var(--emerald-dark),#064e3b); padding:70px 24px; }
+  .quote-inner { max-width:700px; margin:0 auto; text-align:center; }
+  .quote-text { font-family:'Syne',sans-serif; font-size:clamp(1.4rem,3vw,2rem); color:#fff; line-height:1.35; margin-bottom:16px; }
+  .quote-author { font-size:0.85rem; color:rgba(255,255,255,0.5); }
+
+  .org-section { background:var(--ink); padding:80px 24px; }
+  .org-inner { max-width:760px; margin:0 auto; text-align:center; }
+  .org-inner .section-label { color:var(--emerald-mid); }
+  .org-inner .section-title { color:#fff; margin-bottom:48px; }
+  .org-chain { display:flex; flex-direction:column; align-items:center; }
+  .org-node {
+    background:rgba(255,255,255,0.05); border:1px solid rgba(110,231,183,0.15);
+    border-radius:12px; padding:14px 28px; min-width:200px; transition:background .2s;
+  }
+  .org-node:hover { background:rgba(52,211,153,0.1); }
+  .org-node-title { font-size:0.88rem; font-weight:700; color:#fff; }
+  .org-node-sub { font-size:0.7rem; color:rgba(255,255,255,0.38); margin-top:2px; }
+  .org-arrow { color:rgba(110,231,183,0.3); font-size:1.6rem; margin:8px 0; }
+  .org-row { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+</style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="nav-left">
+      <img src="FlixSchool_logo.png" alt="FlixSchool" class="nav-logo"/>
+      <span class="nav-name">FlixSchool</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">🏠 Accueil</a></li>
+      <li><a href="niveaux.html">📚 Niveaux</a></li>
+      <li><a href="equipe.html">👥 Équipe</a></li>
+      <li><a href="https://www.flixschools.fr" target="_blank" class="nav-pronote">📓 Pronote</a></li>
+      <li><a href="rejoindre.html" class="nav-cta">🎮 Rejoindre</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="section-label">👥 Le staff de FlixSchool</div>
+      <h1>L'équipe derrière<br>le chaos organisé</h1>
+      <p>Des gens qui passent leur temps libre à modérer des élèves fictifs. On les respecte énormément. 🫡</p>
+    </div>
+  </div>
+
+  <section class="team-section">
+    <div class="reveal">
+      <div class="section-label">🏆 Notre staff</div>
+      <h2 class="section-title">Les héros méconnus<br>de FlixSchool</h2>
+      <p class="section-desc">Bénévoles, passionnés, et légèrement accros à Discord. Voici ceux qui font tourner la machine depuis 2021. 🔧</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="av-wrap"><div class="team-avatar" style="background:linear-gradient(135deg,#059669,#047857)">👑</div></div>
+        <div class="team-name">Le Fondateur</div>
+        <span class="team-badge">🎯 Directeur</span>
+        <div class="team-desc">Il a tout créé. Il voit tout. Il sait tout. Probablement en train de lire ce message.</div>
+        <div class="team-fun">A survécu à 4 ans de mises à jour Discord. 💪</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="av-wrap"><div class="team-avatar" style="background:linear-gradient(135deg,#dc2626,#b91c1c)">⚡</div></div>
+        <div class="team-name">Les Admins</div>
+        <span class="team-badge" style="background:#fee2e2;color:#b91c1c">🔴 Administration</span>
+        <div class="team-desc">Gardiens de l'ordre fictif. Leur @mention fait trembler même les élèves les plus rebelles.</div>
+        <div class="team-fun">Ont déjà banni un bot par erreur. Ça arrive.</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="av-wrap"><div class="team-avatar" style="background:linear-gradient(135deg,#047857,#065f46)">🛡️</div></div>
+        <div class="team-name">Les Modérateurs</div>
+        <span class="team-badge">🟢 Modération</span>
+        <div class="team-desc">Ils ont vu des choses dans les salons RP... des choses qu'on ne peut pas décrire ici.</div>
+        <div class="team-fun">Temps moyen de réponse : 3 min. Record : 8 secondes.</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="av-wrap"><div class="team-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706)">📖</div></div>
+        <div class="team-name">Les Profs RP</div>
+        <span class="team-badge" style="background:#fef3c7;color:#b45309">🟡 Enseignants</span>
+        <div class="team-desc">Donnent de vrais cours fictifs. Certains ont une pédagogie plus créative que d'autres... 😅</div>
+        <div class="team-fun">Le prof de SVT a donné un devoir sur les dinosaures.</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="av-wrap"><div class="team-avatar" style="background:linear-gradient(135deg,#7c3aed,#6d28d9)">🤖</div></div>
+        <div class="team-name">Les Développeurs</div>
+        <span class="team-badge" style="background:#ede9fe;color:#6d28d9">🟣 Tech</span>
+        <div class="team-desc">Ils maintiennent les bots, le site, les intégrations. Parlent en Python. Dorment peu.</div>
+        <div class="team-fun">404 : vie sociale not found. (Blague de dev.)</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="av-wrap"><div class="team-avatar" style="background:linear-gradient(135deg,#0891b2,#0e7490)">🎨</div></div>
+        <div class="team-name">Les Graphistes</div>
+        <span class="team-badge" style="background:#cffafe;color:#0e7490">🔵 Design</span>
+        <div class="team-desc">Créent les visuels qui rendent FlixSchool beau. Utilisent Figma même pour la liste de courses.</div>
+        <div class="team-fun">Ont refait le logo 7 fois. Le premier était bien. 🤫</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="quote-section">
+    <div class="quote-inner reveal">
+      <div class="quote-text">« On pensait créer un simple serveur Discord.<br>On a créé une institution. »</div>
+      <div class="quote-author">— Le Fondateur de FlixSchool, probablement</div>
+    </div>
+  </div>
+
+  <div class="org-section">
+    <div class="org-inner reveal">
+      <div class="section-label">📊 Organigramme</div>
+      <h2 class="section-title">La hiérarchie<br>du staff</h2>
+      <div class="org-chain">
+        <div class="org-node"><div class="org-node-title">👑 Fondateur</div><div class="org-node-sub">Le boss final. Ne pas déranger sauf urgence.</div></div>
+        <div class="org-arrow">↓</div>
+        <div class="org-row">
+          <div class="org-node"><div class="org-node-title">⚡ Administrateurs</div><div class="org-node-sub">Règles & décisions</div></div>
+          <div class="org-node"><div class="org-node-title">🤖 Développeurs</div><div class="org-node-sub">La magie technique</div></div>
+        </div>
+        <div class="org-arrow">↓</div>
+        <div class="org-row">
+          <div class="org-node"><div class="org-node-title">🛡️ Modérateurs</div><div class="org-node-sub">Gardiens de l'ambiance</div></div>
+          <div class="org-node"><div class="org-node-title">📖 Profs RP</div><div class="org-node-sub">Savoir fictif</div></div>
+          <div class="org-node"><div class="org-node-title">🎨 Graphistes</div><div class="org-node-sub">Le beau</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="FlixSchool_logo.png" alt="FlixSchool"/>
+          <span>FlixSchool</span>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Accueil</a>
+          <a href="niveaux.html">Niveaux</a>
+          <a href="equipe.html">Équipe</a>
+          <a href="https://www.flixschools.fr" target="_blank">📓 Pronote</a>
+          <a href="rejoindre.html">Rejoindre</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 FlixSchool — Serveur Discord Pronote RP fictif</span>
+        <span class="footer-fun">⚠️ Aucun élève n'a séché les cours pour faire ce site... ou presque.</span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Reveal
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.1});
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el => obs.observe(el));
+
+  // Active nav
+  const cur = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links li a').forEach(a => {
+    if(a.getAttribute('href') === cur) a.classList.add('active');
+  });
+
+  // Nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow = window.scrollY > 10
+      ? '0 4px 28px rgba(5,150,105,0.18)' : '0 2px 20px rgba(5,150,105,0.12)';
+  });
+
+  // Confetti + shake
+  const CC = ['#059669','#6ee7b7','#fbbf24','#f472b6','#60a5fa','#fff','#34d399','#a7f3d0'];
+  function launchConfetti(btn) {
+    const r = btn.getBoundingClientRect(), cx = r.left+r.width/2, cy = r.top+r.height/2;
+    for(let i=0;i<55;i++){
+      const p = document.createElement('div');
+      p.className = 'confetti-particle';
+      const a=Math.random()*Math.PI*2, d=80+Math.random()*190;
+      p.style.cssText=[
+        'left:'+(cx-5)+'px','top:'+(cy-5)+'px',
+        'width:'+(6+Math.random()*9)+'px','height:'+(6+Math.random()*9)+'px',
+        '--tx:'+(Math.cos(a)*d)+'px','--ty:'+(Math.sin(a)*d-80)+'px',
+        '--rot:'+((Math.random()-.5)*720)+'deg',
+        '--dur:'+(0.8+Math.random()*.9)+'s',
+        'background:'+CC[Math.floor(Math.random()*CC.length)],
+        'border-radius:'+(Math.random()>.5?'50%':'3px'),
+      ].join(';');
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),2000);
+    }
+  }
+  document.querySelectorAll('.btn-discord').forEach(btn => {
+    btn.addEventListener('click',function(){
+      this.classList.remove('shaking'); void this.offsetWidth;
+      this.classList.add('shaking'); launchConfetti(this);
+      this.addEventListener('animationend',()=>this.classList.remove('shaking'),{once:true});
+    });
+  });
+</script>
+
+
+</body>
+</html>
